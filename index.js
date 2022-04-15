@@ -24,6 +24,6 @@ app.use("/api/categorias", require("./routes/categoria"));
 //   console.log("Corriendo");
 // });
 
-app.listen(443, () => {
-  console.log("Corriendo en 443");
+app.listen(4000, () => {
+  console.log("Corriendo en 4000");
 });
