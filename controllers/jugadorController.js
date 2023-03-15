@@ -61,6 +61,51 @@ exports.getByFilters = async (req, res) => {
   }
 };
 
+exports.getByName = async (req, res) => {
+  try {
+    var filtros = {};
+
+    const filtrosParams = req.params.name;
+    const filtrosArray = filtrosParams.split("&");
+    const nom = filtrosArray[0].split("=");
+    const ape = filtrosArray[1].split("=");
+    const doc = filtrosArray[2].split("=");
+
+    const nombreValue = nom[1];
+    if ( !nombreValue == "" || !nombreValue == null || !nombreValue == undefined ) {
+      var nombreFilter = {
+        nombres: nombreValue,
+      };
+
+      Object.assign(filtros, nombreFilter);
+    }
+    const apellidoValue = ape[1];
+    if ( !apellidoValue == "" || !apellidoValue == null || !apellidoValue == undefined ) {
+      var apellidoFilter = {
+        apellidos: apellidoValue,
+      };
+
+      Object.assign(filtros, apellidoFilter);
+    }
+    const documentoValue = doc[1];
+    if ( !documentoValue == "" || !documentoValue == null || !documentoValue == undefined ) {
+      var documentoFilter = {
+        dni: documentoValue,
+      };
+
+      Object.assign(filtros, documentoFilter);
+    }
+
+    const jugadores = await Jugador.find(filtros);
+    
+    console.log("getByName", filtros)
+    res.json(jugadores);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("tenemos problemas en visualizar Jugador");
+  }
+};
+
 exports.actualizarJugador = async (req, res) => {
   try {
     const {

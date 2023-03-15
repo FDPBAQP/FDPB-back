@@ -8,6 +8,7 @@ const jugadorController = require("../controllers/jugadorController");
 router.post("/", jugadorController.crearJugador);
 router.get("/", jugadorController.obtenerJugadores);
 router.get("/getByFilters/:filtros", jugadorController.getByFilters);
+router.get("/getByName/:name", jugadorController.getByName);
 router.put("/:id", jugadorController.actualizarJugador);
 router.get("/:id", jugadorController.obtenerJugador);
 router.delete("/:id", jugadorController.eliminarJugador);
