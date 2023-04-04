@@ -19,6 +19,9 @@ app.use(cors({
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({mensaje: 'Esta es la API de la FDPB Arequipa'})
+});
 app.use("/api/cargos", require("./routes/cargo"));
 app.use("/api/clubes", require("./routes/club"));
 app.use("/api/dirigentes", require("./routes/dirigente"));
