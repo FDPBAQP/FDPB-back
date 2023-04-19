@@ -1,4 +1,5 @@
 const Jugador = require("../models/Jugador");
+const Club = require("../models/Club");
 
 exports.crearJugador = async (req, res) => {
   try {
@@ -14,8 +15,19 @@ exports.crearJugador = async (req, res) => {
 
 exports.obtenerJugadores = async (req, res) => {
   try {
+    let objArray = []
     const jugadores = await Jugador.find();
-    res.json(jugadores);
+    
+    await jugadores.map(async (jugador) => {
+      let club = await Club.findById(jugador.club[0].detalle);
+      jugador.clubActual = club.detalle;
+      objArray.push(jugador)
+
+      if(objArray.length == jugadores.length){
+        res.json(objArray);
+      }
+    });
+
   } catch (error) {
     console.log(error);
     res.status(500).send("tenemos problemas en visualizar Jugadores");
@@ -181,5 +193,26 @@ exports.eliminarJugador = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("tenemos problemas en eliminar Jugador");
+  }
+};
+
+exports.actualizarCategoriaJugador = async (req, res) => {
+  try {
+    const {
+      id,
+      categoria,
+    } = req.body;
+
+    let actualizar = await Jugador.findById(id);
+
+    actualizar.categoria = categoria;
+
+    actualizar = await Jugador.findOneAndUpdate({ _id: id }, actualizar, {
+      new: true,
+    });
+    res.json(actualizar);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("tenemos problemas en actualizar Jugador");
   }
 };

@@ -1,4 +1,5 @@
 const Entrenador = require("../models/Entrenador");
+const Club = require("../models/Club");
 
 exports.crearEntrenador = async (req, res) => {
   try {
@@ -14,8 +15,18 @@ exports.crearEntrenador = async (req, res) => {
 
 exports.obtenerEntrenadores = async (req, res) => {
   try {
+    let objArray = []
     const entrenadores = await Entrenador.find();
-    res.json(entrenadores);
+    
+    await entrenadores.map(async (entrenador) => {
+      let club = await Club.findById(entrenador.club);
+      entrenador.clubDetalle = club.detalle;
+      objArray.push(entrenador)
+
+      if(objArray.length == entrenadores.length){
+        res.json(objArray);
+      }
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send("tenemos problemas en visualizar Entrenadores");

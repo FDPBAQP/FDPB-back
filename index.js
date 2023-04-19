@@ -9,13 +9,7 @@ const app = express();
 //Conectamos con la DB
 
 conectarDB();
-app.use(cors({
-  Access_Control_Allow_Origin: "*",
-  origin:"*",
-  methode:['GET','POST','PATCH','DELETE','PUT'],
-  allowedHeaders:'Content-Type, Authorization, Origin, X-Requested-With, Accept'
-
-}));
+app.use(cors());
 
 app.use(express.json());
 

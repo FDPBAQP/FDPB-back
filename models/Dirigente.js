@@ -9,6 +9,10 @@ const DirigenteSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  clubDetalle: {
+    type: String,
+    required: false,
+  },
   cargo: {
     type: String,
     required: true,

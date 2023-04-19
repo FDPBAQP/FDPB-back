@@ -9,6 +9,10 @@ const EntrenadorSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  clubDetalle: {
+    type: String,
+    required: false,
+  },
   apellidos: {
     type: String,
     required: true,

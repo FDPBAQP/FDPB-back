@@ -12,5 +12,6 @@ router.get("/getByName/:name", jugadorController.getByName);
 router.put("/:id", jugadorController.actualizarJugador);
 router.get("/:id", jugadorController.obtenerJugador);
 router.delete("/:id", jugadorController.eliminarJugador);
+router.post("/actualizarCategoria", jugadorController.actualizarCategoriaJugador);
 
 module.exports = router;
