@@ -24,6 +24,66 @@ exports.obtenerJugadores = async (req, res) => {
       objArray.push(jugador)
 
       if(objArray.length == jugadores.length){
+
+        objArray.sort(function (a, b) {
+          if (a.apellidos > b.apellidos) { 
+            return 1;
+          } else if (a.apellidos < b.apellidos) {
+            return -1;
+          } 
+          return 0;
+        });
+        res.json(objArray);
+      }
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("tenemos problemas en visualizar Jugadores");
+  }
+};
+
+exports.obtenerJugadoresFilter = async (req, res) => {
+  try {
+    let objArray = []
+    let filtered
+    const {
+      apellido,
+      nombre,
+      dni,
+      cedula
+    } = req.body;
+    let jugadores = await Jugador.find();
+
+    if(apellido){
+      jugadores = jugadores.filter(user => user.apellidos.includes(apellido))
+    }
+    if(nombre){
+      jugadores = jugadores.filter(user => user.nombres.includes(nombre))
+    }
+    if(dni){
+      jugadores = jugadores.filter(user => user.dni.includes(dni))
+    }
+    if(cedula){
+      jugadores = jugadores.filter(user => user.cedula.includes(cedula))
+    }
+    
+    await jugadores.map(async (jugador) => {
+      let club = await Club.findById(jugador.club[0].detalle);
+      jugador.clubActual = club.detalle;
+      objArray.push(jugador)
+
+      if(objArray.length == jugadores.length){
+        objArray.sort(function (a, b) {
+          if (a.apellidos > b.apellidos) { 
+            return 1;
+          } else if (a.apellidos < b.apellidos) {
+            return -1;
+          } 
+          return 0;
+        });
+
+        console.log("array", objArray);
         res.json(objArray);
       }
     });
