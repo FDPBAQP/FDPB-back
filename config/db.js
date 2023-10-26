@@ -7,6 +7,7 @@ const conectarDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      family: 4,
     });
     console.log("Conectado a la BD");
   } catch (error) {

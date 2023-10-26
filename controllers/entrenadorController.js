@@ -19,11 +19,22 @@ exports.obtenerEntrenadores = async (req, res) => {
     const entrenadores = await Entrenador.find();
     
     await entrenadores.map(async (entrenador) => {
+      console.log(entrenador)
       let club = await Club.findById(entrenador.club);
       entrenador.clubDetalle = club.detalle;
       objArray.push(entrenador)
 
       if(objArray.length == entrenadores.length){
+
+        objArray.sort(function (a, b) {
+          if (a.apellidos > b.apellidos) { 
+            return 1;
+          } else if (a.apellidos < b.apellidos) {
+            return -1;
+          } 
+          return 0;
+        });
+        
         res.json(objArray);
       }
     });

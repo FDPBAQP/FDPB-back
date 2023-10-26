@@ -69,7 +69,9 @@ exports.obtenerJugadoresFilter = async (req, res) => {
     }
     
     await jugadores.map(async (jugador) => {
+      console.log("jugador.club[0].detalle", jugador.club[0].detalle)
       let club = await Club.findById(jugador.club[0].detalle);
+      console.log("club", club)
       jugador.clubActual = club.detalle;
       objArray.push(jugador)
 
